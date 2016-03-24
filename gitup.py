@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+##################################
+# Automatically update repository
+##################################
+
 import os
 from os.path import expanduser
 from subprocess import call
@@ -33,12 +37,15 @@ def call_with_message(command, message):
   return return_code
 
 
-def main():
-  branch = 'master'
-
-  with cd("~/workspace/source/"):
+def git_update(dir, branch):
+  with cd(dir):
     call_with_message(["git", "co", branch], "Switching to branch '{}' ...".format(branch))
     call_with_message(["git", "up"], "Pulling and rebasing branch '{}' ...".format(branch))
+
+  
+def main():
+  git_update("~/workspace/source/", 'master')
+  git_update("~/workspace/source/", 'ee/pants_java8')
 
 
 if __name__ == '__main__':
